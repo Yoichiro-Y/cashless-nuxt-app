@@ -15,10 +15,12 @@
                     </button>
                 </div>
             </div>
+            <Search />
             <div class="flex flex-col md:flex-row hidden md:block -mx-2">
                 <a href="/" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
                 <a href="/signup" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">新規登録</a>
-                <a href="/signin" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログイン</a>
+                <a @click="logout" v-if="loggedIn" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログアウト</a>
+                <nuxt-link to="/login" v-else class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログイン</nuxt-link>
             </div>
         </div>
     </nav>
@@ -26,10 +28,39 @@
 </template>
 
 <script>
-	import HeaderNav from "@/components/HeaderNav.vue";
-	export default {
-		components: {
-			HeaderNav
-		}
-	};
+
+    import Search from "@/components/Search.vue";
+    import * as firebase from 'firebase/app';
+    import 'firebase/auth';
+
+    export default {
+        mounted() {
+            this.setupFirebase()
+        },
+        data() {
+            return {
+                loggedIn: false
+            }
+        },
+        components: {
+            Search,
+        },
+        methods: {
+            logout() {
+                firebase.auth().signOut().then(() => {
+                    this.$router.push('/')
+                })
+            },
+            setupFirebase() {
+                firebase.auth().onAuthStateChanged(user => {
+                    if(user) {
+                        console.log('logged in')
+                        this.loggedIn = true;
+                    } else {
+                        this.loggedIn = false;
+                    }
+                })
+            }
+        }
+    }
 </script>
