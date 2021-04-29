@@ -18,7 +18,7 @@
                   </a>
                   <div class="mt-4 flex items-center justify-between">
                       <span class="border-b w-1/5 lg:w-1/4"></span>
-                      <a href="#" class="text-xs text-center text-gray-500 uppercase">または メールアドレスでログイン</a>
+                      <p href="#" class="text-xs text-center text-gray-500 uppercase">または メールアドレスでログイン</p>
                       <span class="border-b w-1/5 lg:w-1/4"></span>
                   </div>
                   <form @submit.prevent="pressed">

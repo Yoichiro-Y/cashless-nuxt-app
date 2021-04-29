@@ -4,7 +4,7 @@
         <div class="mt-5 py-6 flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
               <div class="hidden lg:block lg:w-1/2 bg-cover" style="background-image:url('https://images.unsplash.com/photo-1546514714-df0ccc50d7bf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80')"></div>
               <div class="w-full p-8 lg:w-1/2">
-                  <p class="text-xl text-gray-600 text-center">新規登録</p>
+                  <h1 class="text-xl text-gray-600 text-center">新規登録</h1>
                   <a href="#" class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
                       <div class="px-4 py-3">
                           <svg class="h-6 w-6" viewBox="0 0 40 40">
@@ -14,11 +14,11 @@
                               <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#1976D2"/>
                           </svg>
                       </div>
-                      <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Google で登録</h1>
+                      <h2 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold" @click="google">Google で登録</h2>
                   </a>
                   <div class="mt-4 flex items-center justify-between">
                       <span class="border-b w-1/5 lg:w-1/4"></span>
-                      <a href="#" class="text-xs text-center text-gray-500 uppercase">または メールアドレスで登録</a>
+                      <p href="#" class="text-xs text-center text-gray-500 uppercase">または メールアドレスで登録</p>
                       <span class="border-b w-1/5 lg:w-1/4"></span>
                   </div>
                   <div class="mt-4">
@@ -47,10 +47,49 @@
 <script>
 	import Header from "@/components/Header.vue";
     import Footer from "@/components/Footer.vue";
+    import * as firebase from 'firebase/app'
+    import 'firebase/auth'
+    
     export default {
-        components: {
-                    Header,
-                    Footer,
+    data() {
+        return {
+            email: '',
+            password: '',
+            error: '',
         }
+    },
+    components: {
+                Header,
+                Footer
+    },
+    methods: {
+        google() {
+          console.log('login')
+          const provider = new firebase.auth.GoogleAuthProvider();
+          firebase
+            .auth()
+            .signInWithPopup(provider).then(function(result) {
+                const user = result.user;
+                console.log('success : ' + user)
+            })
+            .then(
+                this.$router.push('/')
+            )
+            .catch(function(error) {
+                var errorCode = error.code;
+                console.log('error : ' + errorCode)
+            })
+        },
+        pressed() {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(this.email, this.password)
+                .then(data => {
+                    console.log(data)
+                    this.$router.push('/')
+                })
+                .catch(error => (this.error = error))
+        }
+      },
     }
 </script>

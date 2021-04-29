@@ -25,7 +25,7 @@
           <div class="flex">
             <div class="w-full lg:w-8/12l">
               <div class="mt-10 p-4 border-b-4 border-t-4 rounded-sm">
-                <h2 class="font-bold text-xl text-gray-800 text-center">人気のコスメランキング</h2>
+                <h2 class="font-bold text-xl text-gray-800 text-center">人気のコスメ</h2>
               </div>
               <div class="flex mt-10">
                 <div class="flex-1 border-l-4 p-3">
