@@ -21,19 +21,27 @@
                       <p href="#" class="text-xs text-center text-gray-500 uppercase">または メールアドレスで登録</p>
                       <span class="border-b w-1/5 lg:w-1/4"></span>
                   </div>
-                  <div class="mt-4">
-                      <label class="block text-gray-700 text-sm font-bold mb-2">メールアドレス</label>
-                      <input class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="email">
-                  </div>
-                  <div class="mt-4">
-                      <div class="flex justify-between">
-                          <label class="block text-gray-700 text-sm font-bold mb-2">パスワード</label>
-                      </div>
-                      <input class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="password">
-                  </div>
-                  <div class="mt-8">
-                      <button class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">登録</button>
-                  </div>
+                  <form @submit.prevent="signup">
+                    <div class="mt-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">ユーザー名</label>
+                        <input type="text" class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" v-model="displayName">
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">メールアドレス</label>
+                        <input type="text" class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" v-model="email">
+                    </div>
+                    <div class="mt-4">
+                        <div class="flex justify-between">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">パスワード</label>
+                            <a href="#" class="text-xs text-gray-500">パスワードをお忘れですか?</a>
+                        </div>
+                        <input type="password" class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" v-model="password">
+                    </div>
+                    <div class="mt-8">
+                        <button type="submit" class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">登録</button>
+                    </div>
+                  </form>
+                  <div class="error" v-if="error">{{ error.message }}</div>
                   <div class="mt-4 flex items-center justify-between">
                       <span class="border-b w-1/5 md:w-1/4"></span>
                       <a href="/login" class="text-xs text-gray-500 uppercase">または ログイン</a>
@@ -80,15 +88,17 @@
                 console.log('error : ' + errorCode)
             })
         },
-        pressed() {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.email, this.password)
-                .then(data => {
-                    console.log(data)
-                    this.$router.push('/')
+       signup() {
+           console.log('signup')
+           firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+            .then((userCredential) => {
+                var user = userCredential.user;
+                user.updateProfile({
+                    displayName:this.displayName
                 })
-                .catch(error => (this.error = error))
+                this.$router.push('/')
+            })
+            .catch(error => (this.error = error))
         }
       },
     }
