@@ -4,7 +4,7 @@
         <div class="md:flex items-center justify-between py-2 px-8 md:px-12">
             <div class="flex justify-between items-center">
                <div class="text-2xl font-bold text-gray-800 md:text-3xl">
-                    <a href="/">OTOCOS</a>
+                    <a href="/"><img src="@/assets/images/logo.png" class="w-96" alt="poimon-logo" border="0"></a>
                </div>
                 <div class="md:hidden">
                     <button type="button" class="block text-gray-800 hover:text-gray-700 focus:text-gray-700 focus:outline-none">
@@ -15,18 +15,37 @@
                     </button>
                 </div>
             </div>
-            <Search />
             <div class="flex flex-col md:flex-row hidden md:block -mx-2">
                 <div v-if="loggedIn">
                     <a href="/" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
                     <a @click="logout" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログアウト</a>
                 </div>
                 <div v-else>
-                    <a href="/" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
-                <a href="/signup" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">新規登録</a>
-                <nuxt-link to="/login"　class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログイン</nuxt-link>
+                    <a href="/" class="text-gray-800 rounded hover:bg-blue-300 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
+                <a href="/signup" class="text-gray-800 rounded hover:bg-blue-300 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">新規登録</a>
+                <nuxt-link to="/login"　class="text-gray-800 rounded hover:bg-blue-300 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログイン</nuxt-link>
                 </div>
             </div>
+        </div>
+        <div class="md:flex items-center justify-between ml-4 md:px-12 pb-5">
+            <div class="flex justify-between items-center">
+                <Search />
+                <p class="ml-4">注目ワード</p>
+                <PoimonButton
+                text="PayPay"
+                />
+                <PoimonButton
+                text="三井住友カード"
+                />
+                <PoimonButton
+                text="auPay"
+                />
+            </div>
+            <div class="flex flex-col md:flex-row hidden md:block -mx-2">
+                
+            </div>
+        </div>
+        <div class="ml-16 pb-6　flex">
         </div>
     </nav>
   </div>
@@ -37,6 +56,7 @@
     import Search from "@/components/Search.vue";
     import * as firebase from 'firebase/app';
     import 'firebase/auth';
+    import PoimonButton from "@/components/common/PoimonButton.vue";
 
     export default {
         mounted() {
@@ -49,6 +69,7 @@
         },
         components: {
             Search,
+            PoimonButton,
         },
         methods: {
             logout() {
