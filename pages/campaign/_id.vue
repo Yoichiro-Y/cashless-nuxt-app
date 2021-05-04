@@ -1,26 +1,26 @@
 <template>
-    <div class="payment-detail">
+    <div class="campaign-detail">
         <Header />
         <section class="text-gray-700 body-font overflow-hidden bg-white">
             <div class="container pt-8 mx-auto">
               <div class="lg:w-4/5 mx-auto flex flex-wrap">
-                <img class="lg:w-1/2 w-full h-96 object-center rounded border border-gray-200" style="object-fit: contain;" :src="payment.image" alt="" />
+                <img class="lg:w-1/2 w-full h-96 object-center rounded border border-gray-200" style="object-fit: contain;" :src="campaign.image" alt="" />
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 lg:mt-0">
-                  <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ payment.brand }}</h2>
-                  <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ payment.name }}</h1>
+                  <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ campaign.brand }}</h2>
+                  <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ campaign.name }}</h1>
                   <div class="flex mb-4">
                     <span class="flex items-center">
                         <StarRating
-                        :rating="payment.score"
+                        :rating="campaign.score"
                         :star-size="StarRatingConfig.starSize"
                         :read-only="StarRatingConfig.readOnly"
-                        />
-                      <span class="text-gray-600 ml-3">{{ payment.reviewCount }} Reviews</span>
+                      />
+                      <span class="text-gray-600 ml-3">{{ campaign.reviewCount }} Reviews</span>
                     </span>
                   </div>
-                  <p class="leading-relaxed">{{ payment.description }}</p>
+                  <p class="leading-relaxed">{{ campaign.description }}</p>
                   <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-                    <span class="title-font font-medium text-2xl text-gray-900">{{ payment.price }}円（税込）</span>
+                    <span class="title-font font-medium text-2xl text-gray-900">{{ campaign.price }}円（税込）</span>
                   </div>
                   <div class="flex">
                     <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -31,15 +31,7 @@
                   </div>
                 </div>
                 <div v-for="review in reviews" :key="review.index">
-                  <!--　todo：good bad を修正  -->
-                 <Review
-                  :score="review.score"
-                  :userName="review.userName"
-                  :title="review.title"
-                  :description="review.description"
-                  :good=1
-                  :bad=1 
-                 />
+                    <Review />
                 </div>
                 <div v-if="loggedIn">
                   <div v-if="!showReviewInput">
@@ -73,7 +65,6 @@
   <script lang="ts">
   import Vue from 'vue'
   import Header from "@/components/Header.vue";
-  import Review from "@/components/review/Review.vue";
   import firebase from '@/plugins/firebase'
   import StarRating from 'vue-star-rating'
    
@@ -81,13 +72,12 @@
     components: {
       StarRating,
       Header,
-      Review,
     },
     mounted() {
             this.setupFirebase()
     },
     data: () => ({
-      payment: {
+      campaign: {
         name: '',
         image: '',
         description: '',
@@ -121,19 +111,19 @@
     created() {
       const db = firebase.firestore()
       const docId = this.$route.params.id
-      const dbItem = db.collection('payments').doc(docId)
+      const dbItem = db.collection('campaigns').doc(docId)
 
       const reviews = dbItem.collection("reviews");
 
       dbItem.get().then((doc) => {
         const data = doc.data()
-        this.payment.image = data.image ? data.image : '/no-image.png'
-        this.payment.name = data.name ? data.name : ''
-        this.payment.brand = data.brand ? data.brand : ''
-        this.payment.score = data.score ? data.score : 0
-        this.payment.price = data.price ? data.price : 0
-        this.payment.description = data.description ? data.description : ''
-        this.payment.reviewCount = data.reviewCount ? data.reviewCount : 0
+        this.campaign.image = data.image ? data.image : '/no-image.png'
+        this.campaign.name = data.name ? data.name : ''
+        this.campaign.brand = data.brand ? data.brand : ''
+        this.campaign.score = data.score ? data.score : 0
+        this.campaign.price = data.price ? data.price : 0
+        this.campaign.description = data.description ? data.description : ''
+        this.campaign.reviewCount = data.reviewCount ? data.reviewCount : 0
       })
 
       reviews.get().then((querySnapshot) => {
@@ -155,7 +145,7 @@
       submit() {
         const db = firebase.firestore()
         const docId = this.$route.params.id
-        const dbItem = db.collection('payments').doc(docId)
+        const dbItem = db.collection('campaigns').doc(docId)
         var user = firebase.auth().currentUser;
         
 

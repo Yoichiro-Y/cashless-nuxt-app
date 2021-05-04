@@ -30,10 +30,8 @@
         <div class="md:flex items-center justify-between ml-4 md:px-12 pb-5">
             <div class="flex justify-between items-center">
                 <Search />
-                <p class="ml-4">注目ワード</p>
-                <PoimonButton
-                text="PayPay"
-                />
+                <p class="ml-4"></p>
+                <a href="/payment"><PoimonButton text="決済一覧" /></a>
                 <PoimonButton
                 text="三井住友カード"
                 />

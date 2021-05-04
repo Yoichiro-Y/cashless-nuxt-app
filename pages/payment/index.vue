@@ -2,27 +2,33 @@
     <div>
     <Header />
     <div class="relative items-center justify-center">
-        <SubHeading 
-         title="Payment"
-         subtitle="キャッシュレス決済一覧"
-        />
+      <SubHeading 
+        title="Payment"
+        subtitle="キャッシュレス決済一覧"
+      />
+      <nuxt-link @click.native="select" :to="`/payment`">
         <PoimonButton
           class="ml-14"
           text="すべて"
         />
+      </nuxt-link>
+      <nuxt-link @click.native="select"  :to="`/payment?category=1`">
         <PoimonButton
           text="クレジットカード"
         />
+      </nuxt-link>
+      <nuxt-link @click.native="select" :to="`/payment?category=0`">
         <PoimonButton
           text="QRコード決済"
         />
+      </nuxt-link>
         <div class="lg:flex items-center container mx-auto my-auto">
             <div v-for="payment in payments" :key="payment.index">
                 <nuxt-link :to="`/payment/${payment.docId}`">
                     <Payment
                     :image="payment.image"
                     :name="payment.name"
-                    :annualFee="payment.price"
+                    :annualFee="payment.annualFee"
                     :description="payment.description"
                     :category="payment.category"
                     :score="payment.score"
@@ -54,9 +60,18 @@ export default Vue.extend({
     SubHeading,
     PoimonButton,
   },
+  methods: {
+      select() {
+        console.log('aaa')
+        location.reload()
+      }
+  },
   created() {
     const db = firebase.firestore()
-    const dbItems = db.collection('payments')
+    let dbItems = db.collection('payments')
+    if(this.$route.query.category){
+      dbItems = dbItems.where('category', '==', this.$route.query.category)
+    }
     dbItems.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
@@ -64,7 +79,7 @@ export default Vue.extend({
         const payment = {
           image: data.image ? data.image : '/no-image.png',
           name: data.name ? data.name : '',
-          price: data.price ? data.price : '-',
+          annualFee: data.annualFee ? data.annualFee : 0,
           description: data.description ? data.description : null,
           docId: doc.id,
           score: data.score ? data.score : 0,
@@ -72,6 +87,6 @@ export default Vue.extend({
         this.payments.push(payment)
       })
     })
-  },
+  }
 })
 </script>

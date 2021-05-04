@@ -17,9 +17,6 @@
             <span class="font-medium text-gray-700 text-base my-2 uppercase h-10">{{ $props.start }} ~ {{ $props.end }}</span>
             <div>最大還元率{{ $props.rate }}%</div>
             <div>還元上限{{ $props.limit }}P</div>
-            <div class="mt-5">
-                <a href="" class="hover:bg-gray-700 rounded-full py-2 px-3 font-semibold hover:text-white bg-gray-400 text-gray-100">詳細</a>
-            </div>
         </div>
     </div>
 </template>

@@ -4,14 +4,13 @@
         <img class="overflow-hidden w-80 h-52" style="object-fit: contain;" :src="$props.image" alt="" />
         <!-- Card Content -->
         <div class="p-4">
-            <div class="font-medium text-gray-500 text-sm my-2 uppercase">{{ $props.brand }}</div>
             <div class="font-medium text-gray-700 text-base my-2 uppercase h-10">{{ $props.name }}</div>
             <StarRating
             v-model="item.score"
             :star-size="StarRatingConfig.starSize"
             :read-only="StarRatingConfig.readOnly"
             />
-            <div class="item-price">{{ $props.price }}円(税込)</div>
+            <div class="item-price"></div>
             <div class="mt-5">
                 <a href="" class="hover:bg-gray-700 rounded-full py-2 px-3 font-semibold hover:text-white bg-gray-400 text-gray-100">詳細</a>
             </div>
@@ -32,15 +31,7 @@ export default Vue.extend({
         type: String,
         required: true,
       },
-      price: {
-        type: Number,
-        required: true,
-      },
       description: {
-        type: String,
-        required: true,
-      },
-      brand: {
         type: String,
         required: true,
       },
