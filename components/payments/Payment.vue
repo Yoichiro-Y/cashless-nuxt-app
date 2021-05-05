@@ -6,11 +6,11 @@
         <div class="p-4">
             <div class="font-medium text-gray-700 text-base my-2 uppercase h-10">{{ $props.name }}</div>
             <StarRating
-            v-model="item.score"
+            v-model="payment.score"
             :star-size="StarRatingConfig.starSize"
             :read-only="StarRatingConfig.readOnly"
+            :rating="3"
             />
-            <div class="item-price"></div>
             <div class="mt-5">
                 <a href="" class="hover:bg-gray-700 rounded-full py-2 px-3 font-semibold hover:text-white bg-gray-400 text-gray-100">詳細</a>
             </div>
@@ -35,12 +35,16 @@ export default Vue.extend({
         type: String,
         required: true,
       },
+      score: {
+        type: Number,
+        required: true,
+      },
     },
     components: {
       StarRating,
     },
     data: () => ({
-      item: {
+      payment: {
         name: '',
         image: '',
         score: 0,

@@ -39,6 +39,8 @@
                     :good=1
                     :bad=1 
                     :userId="review.userId"
+                    :id="review.id"
+                    object="campaigns"
                     />
                 </div>
                 <div v-if="loggedIn">

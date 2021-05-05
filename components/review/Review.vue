@@ -36,9 +36,23 @@
                 <span class="ml-2">{{ $props.bad }}</span>
               </button>
             </div>
-            <div v-if="$props.userId == currentUserId"><button class="ml-3">編集</button><button v-on:click="remove($props.id)" class="ml-3">削除</button></div>
-
+            <div v-if="$props.userId == currentUserId"><button @click="showReviewEdit = !showReviewEdit" class="ml-3">編集</button><button v-on:click="remove($props.id)" class="ml-3">削除</button></div>
           </div>
+          <div v-if="showReviewEdit">
+            <div class="item-score">
+                <StarRating v-model="newScore" :star-size="StarRatingConfig.starSize" />
+            </div>
+            <div>
+              <input class="autoexpand tracking-wide py-1 px-7 mb-3 leading-relaxed appearance-none block w-500 bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newTitle"></input>
+            </div>
+            <div>
+            <textarea class="autoexpand tracking-wide py-2 px-10 mb-3 leading-relaxed appearance-none block w-500 bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newReview" rows="5"></textarea>
+            </div>
+            <div class="flex">
+            <button @click="edit($props.id)" class="review-btn mt-5 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">レビューを編集</button>
+            <button class="ml-4 flex mt-5 text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded" @click="showReviewEdit = !showReviewEdit">閉じる</button>
+            </div>
+        </div>
         </div>
     </div>
 </template>
@@ -112,6 +126,7 @@
         readOnly: true,
       },
       currentUserId: '',
+      showReviewEdit: false,
     }),
     methods: {
           setupFirebase() {
@@ -124,7 +139,6 @@
               })
           },
           remove(id){
-            console.log(this.object)
             const db = firebase.firestore()
             const docId = this.$route.params.id
             const dbItem = db.collection(this.object).doc(docId).collection('reviews')
@@ -134,7 +148,19 @@
             .then(() => {     
               location.reload()
             })
-        }
+          },
+          edit(id){
+            const db = firebase.firestore()
+            const docId = this.$route.params.id
+            const dbItem = db.collection(this.object).doc(docId).collection('reviews')
+
+            dbItem
+            .doc(id)
+            .update({ score: this.newScore, description: this.newReview, title: this.newTitle })
+            .then(() => {     
+              location.reload()
+            })
+          }
       }
     })
     </script>
