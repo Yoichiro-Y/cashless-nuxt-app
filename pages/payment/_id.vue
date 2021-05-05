@@ -50,13 +50,13 @@
                   </div>
                   <div v-else>
                       <div class="item-score">
-                          <StarRating v-model="newScore" :star-size="StarRatingConfig.starSize" />
+                          評価<StarRating v-model="newScore" :star-size="StarRatingConfig.starSize" />
                       </div>
                       <div>
-                        <input class="autoexpand tracking-wide py-1 px-7 mb-3 leading-relaxed appearance-none block w-500 bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newTitle"></input>
+                        タイトル<input class="autoexpand tracking-wide mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newTitle"></input>
                       </div>
                       <div>
-                      <textarea class="autoexpand tracking-wide py-2 px-10 mb-3 leading-relaxed appearance-none block w-500 bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newReview" rows="5"></textarea>
+                        内容<textarea class="autoexpand tracking-wide mb-3 leading-relaxed appearance-none block w-full bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newReview" rows="5"></textarea>
                       </div>
                       <div class="flex">
                       <button @click="submit()" class="review-btn mt-5 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">レビューを投稿</button>

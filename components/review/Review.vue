@@ -146,14 +146,13 @@
             dbItem
             .doc(id)
             .delete()
-            .then(() => {     
+            .then(() => {
               object.get().then((doc) =>{
-                console.log(doc.data().reviewCount)
                 object.update({
                   reviewCount: doc.data().reviewCount - 1
+                })
+                location.reload()
               })
-              })
-              location.reload()
             })
           },
           edit(id){
@@ -164,7 +163,7 @@
             dbItem
             .doc(id)
             .update({ score: this.newScore, description: this.newReview, title: this.newTitle })
-            .then(() => {     
+            .then(() => {  
               location.reload()
             })
           }

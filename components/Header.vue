@@ -32,9 +32,9 @@
                     <a @click="logout" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログアウト</a>
                 </div>
                 <div v-else>
-                    <a href="/" class="text-gray-800 rounded hover:bg-blue-300 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
-                <a href="/signup" class="text-gray-800 rounded hover:bg-blue-300 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">新規登録</a>
-                <nuxt-link to="/login"　class="text-gray-800 rounded hover:bg-blue-300 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログイン</nuxt-link>
+                    <a href="/" class="text-gray-800 rounded hover:bg-gray-700 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
+                <a href="/signup" class="text-gray-800 rounded hover:bg-gray-700 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">新規登録</a>
+                <nuxt-link to="/login"　class="text-gray-800 rounded hover:bg-gray-700 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログイン</nuxt-link>
                 </div>
             </div>
         </div>
