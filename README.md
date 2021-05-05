@@ -1,20 +1,3 @@
-# nuxt-app
-
-## Build Setup
-
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+- キャッシュレス決済のレビューサイトです
+- フロントエンドはnuxt.js、バックエンドはfirebaseを用いました。また、TailwindCSSを使用しました。
+- ユーザー登録・ログイン・ログアウト機能（Google、メールアドレス）、レビューの投稿機能、レビューの削除・編集機能（paymentのレビューのみ）、決済方法新規登録機能、キャンペーン新規登録機能
