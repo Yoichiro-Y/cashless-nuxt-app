@@ -20,7 +20,7 @@
                   </div>
                   <p class="leading-relaxed">{{ campaign.description }}</p>
                   <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-                    <span class="title-font font-medium text-2xl text-gray-900">{{ campaign.price }}円（税込）</span>
+                    <span class="title-font font-medium text-2xl text-gray-900">{{ campaign.payment }}</span>
                   </div>
                   <div class="flex">
                     <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -31,7 +31,15 @@
                   </div>
                 </div>
                 <div v-for="review in reviews" :key="review.index">
-                    <Review />
+                    <Review
+                    :score="review.score"
+                    :userName="review.userName"
+                    :title="review.title"
+                    :description="review.description"
+                    :good=1
+                    :bad=1 
+                    :userId="review.userId"
+                    />
                 </div>
                 <div v-if="loggedIn">
                   <div v-if="!showReviewInput">
@@ -65,6 +73,7 @@
   <script lang="ts">
   import Vue from 'vue'
   import Header from "@/components/Header.vue";
+  import Review from "@/components/review/Review.vue";
   import firebase from '@/plugins/firebase'
   import StarRating from 'vue-star-rating'
    
@@ -72,6 +81,7 @@
     components: {
       StarRating,
       Header,
+      Review,
     },
     mounted() {
             this.setupFirebase()
@@ -82,7 +92,7 @@
         image: '',
         description: '',
         brand: '',
-        price: '',
+        payment: '',
         reviewCount: 0,
       },
       review: {
@@ -121,7 +131,7 @@
         this.campaign.name = data.name ? data.name : ''
         this.campaign.brand = data.brand ? data.brand : ''
         this.campaign.score = data.score ? data.score : 0
-        this.campaign.price = data.price ? data.price : 0
+        this.campaign.payment = data.payment ? data.payment : 0
         this.campaign.description = data.description ? data.description : ''
         this.campaign.reviewCount = data.reviewCount ? data.reviewCount : 0
       })
@@ -132,6 +142,7 @@
  
         const review = {
           id: doc.id,
+          userId: doc.id,
           score: data.score ? data.score : 0,
           description: data.description ? data.description : 'コメントはありません',
           userName: data.userName ? data.userName : '名称未登録',

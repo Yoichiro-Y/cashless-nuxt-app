@@ -6,7 +6,7 @@
         
         <div class="container mx-auto mt-10">
               <SubHeading 
-              title="注目ポイ活"
+              title="Campaign"
               subtitle="開催中のオトクなキャンペーン"
               />
               <div class="lg:flex items-center container mx-auto my-auto">
@@ -24,8 +24,26 @@
                     </nuxt-link>
                 </div>
             </div>
-            <div class="w-0 lg:w-4/12">
-              
+            <SubHeading 
+              title="Payment"
+              subtitle="支払い方法"
+              class="mt-10"
+            />
+            <div class="container mx-auto">
+              <div class="lg:flex items-center container mx-auto my-auto">
+                <div v-for="payment in payments" :key="payment.index">
+                    <nuxt-link :to="`/payment/${payment.docId}`">
+                        <Payment
+                        :image="payment.image"
+                        :name="payment.name"
+                        :annualFee="payment.annualFee"
+                        :description="payment.description"
+                        :category="payment.category"
+                        :score="payment.score"
+                        />
+                    </nuxt-link>
+                </div>
+            </div>
             </div>
         </div>
       </main>
@@ -51,20 +69,23 @@ import Footer from "@/components/Footer.vue";
 import Search from "@/components/Search.vue";
 import SubHeading from "@/components/SubHeading.vue";
 import Campaign from "@/components/campaign/Campaign.vue";
+import Payment from "@/components/payments/Payment.vue";
 
 export default {
   data: () => ({
     campaigns: [],
+    payments: [],
   }),
   components: {
   	Campaign,
     Header,
     Footer,
     SubHeading,
+    Payment,
   },
   created() {
     const db = firebase.firestore()
-    const dbItems = db.collection('campaigns')
+    let dbItems = db.collection('campaigns')
     dbItems.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
@@ -80,6 +101,25 @@ export default {
           end: data.end ? data.end : null,
         }
         this.campaigns.push(campaign)
+      })
+    })
+    dbItems = db.collection('payments')
+    if(this.$route.query.category){
+      dbItems = dbItems.where('category', '==', this.$route.query.category)
+    }
+    dbItems.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data()
+ 
+        const payment = {
+          image: data.image ? data.image : '/no-image.png',
+          name: data.name ? data.name : '',
+          annualFee: data.annualFee ? data.annualFee : 0,
+          description: data.description ? data.description : null,
+          docId: doc.id,
+          score: data.score ? data.score : 0,
+        }
+        this.payments.push(payment)
       })
     })
   },

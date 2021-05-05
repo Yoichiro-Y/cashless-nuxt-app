@@ -20,7 +20,7 @@
                   </div>
                   <p class="leading-relaxed">{{ payment.description }}</p>
                   <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-                    <span class="title-font font-medium text-2xl text-gray-900">{{ payment.price }}円（税込）</span>
+                    <span class="title-font font-medium text-2xl text-gray-900">{{ payment.annualFee }}</span>
                   </div>
                   <div class="flex">
                     <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -39,6 +39,9 @@
                   :description="review.description"
                   :good=1
                   :bad=1 
+                  :userId="review.userId"
+                  :id="review.id"
+                  object="payments"
                  />
                 </div>
                 <div v-if="loggedIn">
@@ -99,10 +102,10 @@
         userName: '',
         score: 0,
         description: '',
-        id: '',
         title: '',
         good: 0,
         bad: 0,
+        id: '',
       },
       loggedIn: false,
       reviews: [],
@@ -141,11 +144,12 @@
         const data = doc.data()
  
         const review = {
-          id: doc.id,
+          userId: data.userId ? data.userId : '',
           score: data.score ? data.score : 0,
           description: data.description ? data.description : 'コメントはありません',
           userName: data.userName ? data.userName : '名称未登録',
           title: data.title ? data.title : '',
+          id: doc.id,
         }
         this.reviews.push(review)
       })
@@ -157,11 +161,10 @@
         const docId = this.$route.params.id
         const dbItem = db.collection('payments').doc(docId)
         var user = firebase.auth().currentUser;
-        
 
         dbItem
           .collection("reviews")
-          .add({ userName: user.displayName, id: user.uid, score: this.newScore, description: this.newReview, title: this.newTitle })
+          .add({ userName: user.displayName, userId: user.uid, score: this.newScore, description: this.newReview, title: this.newTitle })
           .then(() => {
             dbItem.get().then((doc) =>{
               dbItem.update({

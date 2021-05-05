@@ -2,14 +2,14 @@
     <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
       決済<input type="text" v-model="campaign.payment" class="block border border-grey-light w-full p-3 rounded mb-4" />
       <br />
-      注目度<input type="text" v-model="campaign.score" class="block border border-grey-light w-full p-3 rounded mb-4" />
+      注目度<input type="number" v-model="campaign.score" class="block border border-grey-light w-full p-3 rounded mb-4" />
       <br />
       開始日<input type="date" v-model="campaign.start" class="block border border-grey-light w-full p-3 rounded mb-4" />
       終了日<input type="date" v-model="campaign.end" class="block border border-grey-light w-full p-3 rounded mb-4" />
       <br />
-      最大還元率<input type="integer" v-model="campaign.rate" class="block border border-grey-light w-full p-3 rounded mb-4" />
+      最大還元率<input type="number" v-model="campaign.rate" class="block border border-grey-light w-full p-3 rounded mb-4" />
       <br />
-      還元上限<input type="integer" v-model="campaign.limit" class="block border border-grey-light w-full p-3 rounded mb-4" />
+      還元上限<input type="number" v-model="campaign.limit" class="block border border-grey-light w-full p-3 rounded mb-4" />
       <br />
       対象店舗<input type="text" v-model="campaign.store" class="block border border-grey-light w-full p-3 rounded mb-4" />
       <br />

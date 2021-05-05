@@ -36,6 +36,8 @@
                 <span class="ml-2">{{ $props.bad }}</span>
               </button>
             </div>
+            <div v-if="$props.userId == currentUserId"><button class="ml-3">編集</button><button v-on:click="remove($props.id)" class="ml-3">削除</button></div>
+
           </div>
         </div>
     </div>
@@ -45,11 +47,16 @@
     import Vue from 'vue'
     import firebase from '@/plugins/firebase'
     import StarRating from 'vue-star-rating'
+    var user = firebase.auth().currentUser
     
     export default Vue.extend({
     props: {
         score: {
             type: Number,
+            required: true,
+        },
+        userId: {
+            type: String,
             required: true,
         },
         userName: {
@@ -72,24 +79,62 @@
             type: Number,
             required: true,
         },
+        id: {
+          type: String,
+          required: true,
+        },
+        object: {
+          type: String,
+          required: true,
+        }
     },
-      components: {
-        StarRating,
+    mounted() {
+      this.setupFirebase()
+    },
+    components: {
+      StarRating,
+    },
+    data: () => ({
+      review: {
+        userName: '',
+        score: 0,
+        description: '',
+        id: '',
+        title: '',
+        good: 0,
+        bad: 0,
       },
-      data: () => ({
-        review: {
-          userName: '',
-          score: 0,
-          description: '',
-          id: '',
-          title: '',
-          good: 0,
-          bad: 0,
-        },
-        StarRatingConfig: {
-          starSize: 30,
-          readOnly: true,
-        },
-      }),
+      user: {
+        uid: ''
+      },
+      StarRatingConfig: {
+        starSize: 30,
+        readOnly: true,
+      },
+      currentUserId: '',
+    }),
+    methods: {
+          setupFirebase() {
+              firebase.auth().onAuthStateChanged(user => {
+                  if(user) {
+                      this.currentUserId = user.uid;
+                  } else {
+                      this.currentInUserId = '';
+                  }
+              })
+          },
+          remove(id){
+            console.log(this.object)
+            const db = firebase.firestore()
+            const docId = this.$route.params.id
+            const dbItem = db.collection(this.object).doc(docId).collection('reviews')
+            dbItem
+            .doc(id)
+            .delete()
+            .then(() => {     
+              location.reload()
+            })
+        }
+      }
     })
     </script>
