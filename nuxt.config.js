@@ -1,6 +1,12 @@
 const pkg = require('./package')
 const webpack = require('webpack')
 
+export default {
+  generate: {
+      routes: ['404']
+  }   
+}
+
 module.exports = {
   mode: 'spa',
 

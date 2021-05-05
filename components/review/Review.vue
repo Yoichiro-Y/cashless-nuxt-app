@@ -141,11 +141,18 @@
           remove(id){
             const db = firebase.firestore()
             const docId = this.$route.params.id
-            const dbItem = db.collection(this.object).doc(docId).collection('reviews')
+            const object = db.collection(this.object).doc(docId)
+            const dbItem = object.collection('reviews')
             dbItem
             .doc(id)
             .delete()
             .then(() => {     
+              object.get().then((doc) =>{
+                console.log(doc.data().reviewCount)
+                object.update({
+                  reviewCount: doc.data().reviewCount - 1
+              })
+              })
               location.reload()
             })
           },

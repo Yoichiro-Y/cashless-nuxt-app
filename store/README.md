@@ -1,10 +1,3 @@
-# STORE
-
-**This directory is not required, you can delete it if you don't want to use it.**
-
-This directory contains your Vuex Store files.
-Vuex Store option is implemented in the Nuxt.js framework.
-
-Creating a file in this directory automatically activates the option in the framework.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/vuex-store).
+- キャッシュレス決済のレビューサイトです
+- フロントエンドはnuxt.js、バックエンドはfirebaseを用いました。また、TailwindCSSを使用しました。
+- ユーザー登録・ログイン・ログアウト機能（Google、メールアドレス）、レビューの投稿機能、レビューの削除・編集機能（paymentのレビューのみ）、決済方法新規登録機能、キャンペーン新規登録機能
