@@ -85,7 +85,8 @@ export default {
   },
   created() {
     const db = firebase.firestore()
-    let dbItems = db.collection('campaigns')
+    console.log(this.$dayjs().format('YYYY-MM-DD'))
+    let dbItems = db.collection('campaigns').where('end', '>', this.$dayjs().format('YYYY-MM-DD'))
     dbItems.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = doc.data()

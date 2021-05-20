@@ -43,40 +43,39 @@
 </template>
 
 <script>
+import Search from "@/components/Search.vue";
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import PoimonButton from "@/components/common/PoimonButton.vue";
 
-    import Search from "@/components/Search.vue";
-    import * as firebase from 'firebase/app';
-    import 'firebase/auth';
-    import PoimonButton from "@/components/common/PoimonButton.vue";
-
-    export default {
-        mounted() {
-            this.setupFirebase()
-        },
-        data() {
-            return {
-                loggedIn: false
-            }
-        },
-        components: {
-            Search,
-            PoimonButton,
-        },
-        methods: {
-            logout() {
-                firebase.auth().signOut().then(() => {
-                    this.$router.push('/')
-                })
-            },
-            setupFirebase() {
-                firebase.auth().onAuthStateChanged(user => {
-                    if(user) {
-                        this.loggedIn = true;
-                    } else {
-                        this.loggedIn = false;
-                    }
-                })
-            }
+export default {
+    mounted() {
+        this.setupFirebase()
+    },
+    data() {
+        return {
+            loggedIn: false
         }
+    },
+    components: {
+        Search,
+        PoimonButton,
+    },
+    methods: {
+        logout() {
+            firebase.auth().signOut().then(() => {
+                this.$router.push('/')
+            })
+        },
+        setupFirebase() {
+            firebase.auth().onAuthStateChanged(user => {
+                if(user) {
+                    this.loggedIn = true;
+                } else {
+                    this.loggedIn = false;
+                }
+            })
+        }
+    }
     }
 </script>

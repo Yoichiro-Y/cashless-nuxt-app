@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-start w-screen">
+    <div class="flex items-start w-screen mt-4">
         <div class="flex-shrink-0">
           <div class="inline-block relative">
             <div class="relative w-16 h-16 rounded-full overflow-hidden">

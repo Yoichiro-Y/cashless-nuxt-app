@@ -45,21 +45,21 @@
                 </div>
                 <div v-if="loggedIn">
                   <div v-if="!showReviewInput">
-                      <button class="flex mt-5 ml-auto text-white bg-gray-400 border-0 py-2 px-6 focus:outline-none hover:bg-gray-500 rounded" @click="showReviewInput = !showReviewInput">レビューを書く</button>
+                      <t-button @click="showReviewInput = !showReviewInput">レビューを書く</t-button>
                   </div>
                   <div v-else>
                       <div class="item-score">
                           評価<StarRating v-model="newScore" :star-size="StarRatingConfig.starSize" />
                       </div>
                       <div>
-                        タイトル<input class="autoexpand tracking-wide py-1 px-7 mb-3 leading-relaxed appearance-none block w-500 bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newTitle"></input>
+                        タイトル<t-input v-model="newTitle"></t-input>
                       </div>
                       <div>
-                        内容<textarea class="autoexpand tracking-wide py-2 px-10 mb-3 leading-relaxed appearance-none block w-500 bg-gray-200 border border-gray-200 rounded focus:outline-none focus:bg-white focus:border-gray-500" v-model="newReview" rows="5"></textarea>
+                        内容<t-textarea v-model="newReview" rows="5"></t-textarea>
                       </div>
                       <div class="flex">
-                      <button @click="submit()" class="review-btn mt-5 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">レビューを投稿</button>
-                      <button class="ml-4 flex mt-5 text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded" @click="showReviewInput = !showReviewInput">閉じる</button>
+                      <t-button @click="submit()" class="mt-5 mb-10">レビューを投稿</t-button>
+                      <button class="ml-4 flex mt-5 text-white bg-gray-500 border-0 py-2 px-6 mb-10 focus:outline-none hover:bg-gray-600 rounded" @click="showReviewInput = !showReviewInput">閉じる</button>
                       </div>
                   </div>
                 </div>
@@ -69,15 +69,18 @@
               </div>
             </div>
           </section>
+          <Footer />
         </div>
   </template>
    
   <script lang="ts">
   import Vue from 'vue'
+  import VueTailwind from 'vue-tailwind'
   import Header from "@/components/Header.vue";
   import Review from "@/components/review/Review.vue";
   import firebase from '@/plugins/firebase'
   import StarRating from 'vue-star-rating'
+  import settings from '@/components/vue-tailwind.js'
    
   export default Vue.extend({
     components: {

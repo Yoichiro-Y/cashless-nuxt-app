@@ -40,7 +40,7 @@
     </div>
 </template>
  
-<script lang="ts">
+<script>
 import Vue from 'vue'
 import firebase from '@/plugins/firebase'
 import Payment from "@/components/payments/Payment.vue";
