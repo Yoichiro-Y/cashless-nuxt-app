@@ -9,7 +9,7 @@
               title="Campaign"
               subtitle="開催中のオトクなキャンペーン"
               />
-              <div class="lg:flex items-center container mx-auto my-auto">
+              <div class="lg:flex wrap flex-wrap items-center container mx-auto my-auto">
                 <div v-for="campaign in campaigns" :key="campaign.index">
                     <nuxt-link :to="`/campaign/${campaign.docId}`">
                         <Campaign
@@ -85,7 +85,6 @@ export default {
   },
   created() {
     const db = firebase.firestore()
-    console.log(this.$dayjs().format('YYYY-MM-DD'))
     let dbItems = db.collection('campaigns').where('end', '>', this.$dayjs().format('YYYY-MM-DD'))
     dbItems.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
