@@ -6,14 +6,11 @@
         <div class="p-4">
             <div class="font-medium text-gray-700 text-base my-2 uppercase h-10">{{ $props.name }}</div>
             <StarRating
-            v-model="payment.score"
+            class="flex"
             :star-size="StarRatingConfig.starSize"
             :read-only="StarRatingConfig.readOnly"
-            :rating="3"
+            :rating="$props.score"
             />
-            <div class="mt-5">
-                <a href="" class="hover:bg-gray-700 rounded-full py-2 px-3 font-semibold hover:text-white bg-gray-400 text-gray-100">詳細</a>
-            </div>
         </div>
     </div>
 </template>

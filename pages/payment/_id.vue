@@ -44,7 +44,7 @@
                  />
                 </div>
                 <div v-if="loggedIn">
-                  <div v-if="!showReviewInput">
+                  <div class="mt-5" v-if="!showReviewInput">
                       <t-button @click="showReviewInput = !showReviewInput">レビューを書く</t-button>
                   </div>
                   <div v-else>

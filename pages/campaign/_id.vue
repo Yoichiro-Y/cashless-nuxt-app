@@ -143,6 +143,7 @@
         this.campaign.limit = data.limit ? data.limit : 0
         this.campaign.start = data.start ? data.start : ''
         this.campaign.end = data.end ? data.end : ''
+        this.campaign.reviewCount = data.reviewCount ? data.reviewCount : 0
       })
 
       reviews.get().then((querySnapshot) => {
