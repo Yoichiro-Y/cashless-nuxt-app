@@ -78,6 +78,7 @@
   import Vue from 'vue'
   import VueTailwind from 'vue-tailwind'
   import Header from "@/components/Header.vue";
+  import Footer from "@/components/Footer.vue";
   import Review from "@/components/review/Review.vue";
   import firebase from '@/plugins/firebase'
   import StarRating from 'vue-star-rating'
@@ -90,6 +91,7 @@
       StarRating,
       Header,
       Review,
+      Footer,
     },
     mounted() {
             this.setupFirebase()

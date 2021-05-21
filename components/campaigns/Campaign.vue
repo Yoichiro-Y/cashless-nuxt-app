@@ -16,7 +16,8 @@
             </div>
             <span class="font-medium text-gray-700 text-base my-2 uppercase h-10">{{ $props.start }} ~ {{ $props.end }}</span>
             <div>最大還元率{{ $props.rate }}%</div>
-            <div>還元上限{{ $props.limit }}P</div>
+            <div v-if="$props.limit == 99999">還元上限なし</div>
+            <div v-else>還元上限{{ $props.limit }}P</div>
         </div>
     </div>
 </template>

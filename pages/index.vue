@@ -68,7 +68,7 @@ import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import Search from "@/components/Search.vue";
 import SubHeading from "@/components/SubHeading.vue";
-import Campaign from "@/components/campaign/Campaign.vue";
+import Campaign from "@/components/campaigns/Campaign.vue";
 import Payment from "@/components/payments/Payment.vue";
 
 export default {

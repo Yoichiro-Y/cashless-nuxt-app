@@ -36,6 +36,7 @@
                 </nuxt-link>
             </div>
         </div>
+        <Footer />
     </div>
     </div>
 </template>

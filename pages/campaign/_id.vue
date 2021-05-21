@@ -45,7 +45,7 @@
                 </div>
                 <div v-if="loggedIn">
                   <div v-if="!showReviewInput">
-                      <t-button @click="showReviewInput = !showReviewInput">レビューを書く</t-button>
+                      <t-button class="mt-5" @click="showReviewInput = !showReviewInput">レビューを書く</t-button>
                   </div>
                   <div v-else>
                       <div class="item-score">
@@ -76,6 +76,7 @@
   <script lang="ts">
   import Vue from 'vue'
   import VueTailwind from 'vue-tailwind'
+  import Footer from "@/components/Footer.vue";
   import Header from "@/components/Header.vue";
   import Review from "@/components/review/Review.vue";
   import firebase from '@/plugins/firebase'
@@ -87,6 +88,7 @@
       StarRating,
       Header,
       Review,
+      Footer,
     },
     mounted() {
             this.setupFirebase()
