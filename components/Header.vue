@@ -19,12 +19,8 @@
                 <Search />
                 <p class="ml-4"></p>
                 <a href="/payment"><PoimonButton text="決済一覧" /></a>
-                <PoimonButton
-                text="三井住友カード"
-                />
-                <PoimonButton
-                text="auPay"
-                />
+                <a href="/campaign?search=toyota"><PoimonButton text="toyota" /></a>
+                <a href="/campaign?search=aupay"><PoimonButton text="aupay" /></a>
             </div>
             <div class="flex flex-col md:flex-row hidden md:block -mx-2">
                 <div v-if="loggedIn">

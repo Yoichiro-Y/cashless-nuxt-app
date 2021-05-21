@@ -37,8 +37,7 @@
                   :userName="review.userName"
                   :title="review.title"
                   :description="review.description"
-                  :good=1
-                  :bad=1 
+                  :good="review.good"
                   :userId="review.userId"
                   :id="review.id"
                   object="payments"
@@ -65,7 +64,7 @@
                   </div>
                 </div>
                 <div v-else>
-                  ログインをすることでレビューを投稿できます
+                  ログインすることでレビューを投稿できます
                 </div>
               </div>
             </div>
@@ -133,7 +132,7 @@
       const docId = this.$route.params.id
       const dbItem = db.collection('payments').doc(docId)
 
-      const reviews = dbItem.collection("reviews");
+      const reviews = dbItem.collection("reviews").orderBy("good", "desc");
 
       dbItem.get().then((doc) => {
         const data = doc.data()
@@ -157,6 +156,7 @@
           userName: data.userName ? data.userName : '名称未登録',
           title: data.title ? data.title : '',
           id: doc.id,
+          good: data.good ? data.good : 0,
         }
         this.reviews.push(review)
       })

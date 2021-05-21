@@ -4,24 +4,8 @@
     <div class="relative items-center justify-center">
       <SubHeading 
         title="Campaign"
-        subtitle="キャッシュレス決済一覧"
+        subtitle="キャンペーン一覧"
       />
-      <nuxt-link @click.native="select" :to="`/campaign`">
-        <PoimonButton
-          class="ml-14"
-          text="すべて"
-        />
-      </nuxt-link>
-      <nuxt-link @click.native="select"  :to="`/campaign?category=1`">
-        <PoimonButton
-          text="クレジットカード"
-        />
-      </nuxt-link>
-      <nuxt-link @click.native="select" :to="`/campaign?category=0`">
-        <PoimonButton
-          text="QRコード決済"
-        />
-      </nuxt-link>
         <div class="lg:flex items-center container mx-auto my-auto">
             <div v-for="campaign in campaigns" :key="campaign.index">
                 <nuxt-link :to="`/campaign/${campaign.docId}`">

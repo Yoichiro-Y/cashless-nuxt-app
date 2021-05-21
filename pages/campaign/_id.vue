@@ -6,10 +6,13 @@
               <div class="lg:w-4/5 mx-auto flex flex-wrap">
                 <img class="lg:w-1/2 w-full h-96 object-center rounded border border-gray-200" style="object-fit: contain;" :src="campaign.image" alt="" />
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 lg:mt-0">
-                  <h2 class="text-sm title-font text-gray-500 tracking-widest">{{ campaign.brand }}</h2>
-                  <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ campaign.name }}</h1>
+                  <div class="title-font font-medium text-2xl text-gray-900">{{ campaign.payment }}</div>
+                  <span class="font-medium text-gray-700 text-base my-2 uppercase h-10">{{ campaign.start }} ~ {{ campaign.end }}</span>
+                  <div>最大還元率{{ campaign.rate }}%</div>
+                  <div v-if="campaign.limit == 99999">還元上限なし</div>
+                  <div v-else>還元上限{{ campaign.limit }}P</div>
                   <div class="flex mb-4">
-                    <span class="flex items-center">
+                    <span class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5 w-full">
                         <StarRating
                         :rating="campaign.score"
                         :star-size="StarRatingConfig.starSize"
@@ -17,10 +20,6 @@
                       />
                       <span class="text-gray-600 ml-3">{{ campaign.reviewCount }} Reviews</span>
                     </span>
-                  </div>
-                  <p class="leading-relaxed">{{ campaign.description }}</p>
-                  <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-                    <span class="title-font font-medium text-2xl text-gray-900">{{ campaign.payment }}</span>
                   </div>
                   <div class="flex">
                     <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -36,8 +35,7 @@
                     :userName="review.userName"
                     :title="review.title"
                     :description="review.description"
-                    :good=1
-                    :bad=1 
+                    :good="review.good"
                     :userId="review.userId"
                     :id="review.id"
                     object="campaigns"
@@ -64,7 +62,7 @@
                   </div>
                 </div>
                 <div v-else>
-                  ログインをすることでレビューを投稿できます
+                  ログインすることでレビューを投稿できます
                 </div>
               </div>
             </div>
@@ -91,13 +89,16 @@
       Footer,
     },
     mounted() {
-            this.setupFirebase()
+      this.setupFirebase()
     },
     data: () => ({
       campaign: {
         name: '',
         image: '',
-        description: '',
+        rate: '',
+        limit: '',
+        start: '',
+        end: '',
         brand: '',
         payment: '',
         reviewCount: 0,
@@ -110,6 +111,7 @@
         title: '',
         good: 0,
         bad: 0,
+        goodCount: 0,
       },
       loggedIn: false,
       reviews: [],
@@ -130,17 +132,17 @@
       const docId = this.$route.params.id
       const dbItem = db.collection('campaigns').doc(docId)
 
-      const reviews = dbItem.collection("reviews");
+      const reviews = dbItem.collection("reviews").orderBy("good", "desc");
 
       dbItem.get().then((doc) => {
         const data = doc.data()
         this.campaign.image = data.image ? data.image : '/no-image.png'
-        this.campaign.name = data.name ? data.name : ''
-        this.campaign.brand = data.brand ? data.brand : ''
         this.campaign.score = data.score ? data.score : 0
         this.campaign.payment = data.payment ? data.payment : 0
-        this.campaign.description = data.description ? data.description : ''
-        this.campaign.reviewCount = data.reviewCount ? data.reviewCount : 0
+        this.campaign.rate = data.rate ? data.rate : ''
+        this.campaign.limit = data.limit ? data.limit : 0
+        this.campaign.start = data.start ? data.start : ''
+        this.campaign.end = data.end ? data.end : ''
       })
 
       reviews.get().then((querySnapshot) => {
@@ -154,6 +156,7 @@
           description: data.description ? data.description : 'コメントはありません',
           userName: data.userName ? data.userName : '名称未登録',
           title: data.title ? data.title : '',
+          good: data.good ? data.good  : 0
         }
         this.reviews.push(review)
       })

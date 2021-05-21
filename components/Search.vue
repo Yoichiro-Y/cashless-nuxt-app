@@ -21,7 +21,7 @@
     export default {
         methods: {
             search() {
-                if(this.text != undefined) this.$router.replace(`/campaign?search=${this.text}`)
+                if(this.text != undefined) this.$router.replace(`/campaign?search=${this.text.toLowerCase()}`)
             },
         }
         }
