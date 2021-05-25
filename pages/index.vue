@@ -9,8 +9,8 @@
               title="Campaign"
               subtitle="開催中のオトクなキャンペーン"
               />
-              <div class="lg:flex wrap flex-wrap items-center container mx-auto my-auto">
-                <div v-for="campaign in campaigns" :key="campaign.index">
+              <div class="lg:flex wrap flex-wrap content-center  container mx-auto my-auto">
+                <div class="" v-for="campaign in campaigns" :key="campaign.index">
                     <nuxt-link :to="`/campaign/${campaign.docId}`">
                         <Campaign
                         :image="campaign.image"
@@ -70,6 +70,7 @@ import Search from "@/components/Search.vue";
 import SubHeading from "@/components/SubHeading.vue";
 import Campaign from "@/components/campaigns/Campaign.vue";
 import Payment from "@/components/payments/Payment.vue";
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default {
   data: () => ({
