@@ -1,12 +1,12 @@
 <template>
     <div>
     <Header />
-    <div class="relative items-center justify-center">
-      <SubHeading 
-        title="Campaign"
-        subtitle="キャンペーン一覧"
-      />
-        <div class="lg:flex items-center container mx-auto my-auto">
+    <div class="relative items-center container mx-auto my-auto">
+        <SubHeading 
+          title="Campaign"
+          subtitle="キャンペーン一覧"
+        />
+        <div class="lg:flex items-center">
             <div v-for="campaign in campaigns" :key="campaign.index">
                 <nuxt-link :to="`/campaign/${campaign.docId}`">
                     <Campaign
@@ -21,8 +21,8 @@
                 </nuxt-link>
             </div>
         </div>
-        <Footer />
     </div>
+    <Footer />
     </div>
 </template>
  

@@ -1,28 +1,12 @@
 <template>
     <div>
     <Header />
-    <div class="relative items-center justify-center">
-      <SubHeading 
-        title="Payment"
-        subtitle="キャッシュレス決済一覧"
-      />
-      <nuxt-link @click.native="select" :to="`/payment`">
-        <PoimonButton
-          class="ml-14"
-          text="すべて"
-        />
-      </nuxt-link>
-      <nuxt-link @click.native="select"  :to="`/payment?category=1`">
-        <PoimonButton
-          text="クレジットカード"
-        />
-      </nuxt-link>
-      <nuxt-link @click.native="select" :to="`/payment?category=0`">
-        <PoimonButton
-          text="QRコード決済"
-        />
-      </nuxt-link>
-        <div class="lg:flex items-center container mx-auto my-auto">
+        <div class="relative items-center container mx-auto my-auto">
+          <SubHeading 
+                title="Payment"
+                subtitle="決済方法一覧"
+              />
+          <div class="lg:flex items-center container mx-auto my-auto">       
             <div v-for="payment in payments" :key="payment.index">
                 <nuxt-link :to="`/payment/${payment.docId}`">
                     <Payment
@@ -36,8 +20,8 @@
                 </nuxt-link>
             </div>
         </div>
-        <Footer />
     </div>
+    <Footer />
     </div>
 </template>
  

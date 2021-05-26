@@ -3,14 +3,13 @@
     <div>
       <Header />
       <main>
-        
         <div class="container mx-auto mt-10">
               <SubHeading 
               title="Campaign"
               subtitle="開催中のオトクなキャンペーン"
               />
               <div class="lg:flex wrap flex-wrap content-center  container mx-auto my-auto">
-                <div class="" v-for="campaign in campaigns" :key="campaign.index">
+                <div v-for="campaign in campaigns" :key="campaign.index">
                     <nuxt-link :to="`/campaign/${campaign.docId}`">
                         <Campaign
                         :image="campaign.image"

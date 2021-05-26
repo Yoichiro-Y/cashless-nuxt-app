@@ -23,18 +23,17 @@
                     </button>
                 </div>
             </div>
-            <div class="hidden md:block">
+            <div class="hidden lg:block">
                 <Search />
             </div>
             <div class="flex justify-between items-center">
-                <p class="ml-4"></p>
-                <a class="hidden lg:block" href="/payment"><PoimonButton text="決済一覧" /></a>
+                <a class="hidden lg:block" href="/payment"><PoimonButton text="決済" /></a>
                 <a class="hidden lg:block" href="/campaign?search=toyota"><PoimonButton text="toyota" /></a>
                 <a class="hidden lg:block"href="/campaign?search=aupay"><PoimonButton text="aupay" /></a>
             </div>
             <div class="flex flex-col md:flex-row hidden md:block -mx-2">
                 <div v-if="loggedIn">
-                    <a href="/" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
+                    <a href="/" class="text-gray-800 rounded hover:bg-gray-700 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
                     <a @click="logout" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログアウト</a>
                 </div>
                 <div v-else>
@@ -49,13 +48,14 @@
     
     <div v-if="isOpen">
         <ul v-if="loggedIn">
-            <li><a href="/" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a></li>
-            <li><a @click="logout" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログアウト</a></li>
+            <li><a href="/" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-500 hover:text-white">ホーム</a></li>
+            <li><a @click="logout" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-500 hover:text-white">ログアウト</a></li>
+            <li class="ml-3 pb-3 mt-3"><Search /></li>
         </ul>
         <ul v-else>
             <li><a href="/" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-500 hover:text-white">ホーム</a></li>
             <li><a href="/signup" class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-500 hover:text-white">新規登録</a></li>
-            <li><nuxt-link to="/login"　class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-blue-500 hover:text-white">ログイン</nuxt-link></li>
+            <li><nuxt-link to="/login"　class="block px-4 py-2 text-sm capitalize text-gray-700 hover:bg-gray-500 hover:text-white">ログイン</nuxt-link></li>
             <li class="ml-3 pb-3 mt-3"><Search /></li>
         </ul>
     </div>

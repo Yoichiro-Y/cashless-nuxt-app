@@ -1,5 +1,5 @@
 <template>
-    <div class="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-8 w-64">
+    <div class="lg:m-4 shadow-md hover:shadow-lg hover:bg-gray-100 rounded-lg bg-white my-12 mx-16 w-64">
         <!-- Card Image -->
         <img class="overflow-hidden w-80 h-52" style="object-fit: contain;" :src="$props.image" alt="" />
         <!-- Card Content -->
