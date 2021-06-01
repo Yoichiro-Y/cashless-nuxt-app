@@ -8,16 +8,8 @@
         />
         <div class="lg:flex items-center">
             <div v-for="campaign in campaigns" :key="campaign.index">
-                <nuxt-link :to="`/campaign/${campaign.docId}`">
-                    <Campaign
-                    :image="campaign.image"
-                    :payment="campaign.payment"
-                    :score="campaign.score"
-                    :rate="campaign.rate"
-                    :limit="campaign.limit"
-                    :start="campaign.start"
-                    :end="campaign.end"
-                    />
+                <nuxt-link :to="`/campaign/${campaign.id}`">
+                    <Campaign :campaign="campaign" />
                 </nuxt-link>
             </div>
         </div>
@@ -36,9 +28,6 @@ import SubHeading from "@/components/SubHeading.vue";
 import PoimonButton from "@/components/common/PoimonButton.vue";
  
 export default {
-  data: () => ({
-    campaigns: [],
-  }),
   components: {
   	Campaign,
     Header,
@@ -46,41 +35,18 @@ export default {
     SubHeading,
     PoimonButton,
   },
-  methods: {
-      select() {
-        location.reload()
-      }
-  },
   watch: {
         '$route' (to, from) {
             location.reload()
         }
     },
   created() {
-    const db = firebase.firestore()
-    let dbItems = db.collection('campaigns')
-    if(this.$route.query.search){
-        console.log(this.$route.query.search)
-      dbItems = dbItems.where('tag', 'array-contains', this.$route.query.search)
-    }
-    dbItems.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const data = doc.data()
- 
-        const campaign = {
-          image: data.image ? data.image : '/no-image.png',
-          score: data.score ? data.score : 0,
-          payment: data.payment ? data.payment : '',
-          docId: doc.id,
-          rate: data.rate ? data.rate : 0,
-          limit: data.limit ? data.limit : 0,
-          start: data.start ? data.start : null,
-          end: data.end ? data.end : null,
-          tag: data.tag ? data.tag : null,
-        }
-        this.campaigns.push(campaign)
-      })
-    })
-  }
+    this.$store.dispatch('campaigns/search')
+  },
+  computed: {
+      campaigns() {
+        return this.$store.getters['campaigns/orderedCampaigns']
+      },
+    },
 }
 </script>

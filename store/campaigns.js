@@ -1,5 +1,6 @@
 import firebase from '~/plugins/firebase'
 import { firestoreAction } from 'vuexfire'
+import { _ } from 'core-js'
 
 const db = firebase.firestore()
 const campaignsRef = db.collection('campaigns')
@@ -10,16 +11,10 @@ export const state = () => ({
 
 export const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('campaigns', campaignsRef)
+    bindFirestoreRef('campaigns', campaignsRef.where('end', '>', $nuxt.$dayjs().format('YYYY-MM-DD')))
   }),
-  count: firestoreAction((context, name) => {
-    if(name.trim()) {
-      campaignsRef.add({
-        name: name,
-        done: false,
-        created: firebase.firestore.FieldValue.serverTimestamp()
-      })
-    }
+  search: firestoreAction(({ bindFirestoreRef }) => {
+    bindFirestoreRef('campaigns', campaignsRef.where('tag', 'array-contains', $nuxt.$route.query.search))
   }),
   goodCount: firestoreAction((context, { id, reviewId}) => {
     console.log(id + ':' + reviewId)
@@ -33,7 +28,7 @@ export const actions = {
 }
 
 export const getters = {
-  orderdCampaigns: state => {
+  orderedCampaigns: state => {
     return _.sortBy(state.campaigns, 'created')
   }
 }

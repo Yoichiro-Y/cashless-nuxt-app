@@ -9,13 +9,13 @@
                 <div class="md:hidden">
                     <button @click="isOpen = !isOpen" type="button" class="block text-gray-800 hover:text-gray-700 focus:text-gray-700 focus:outline-none">
                             <div class="relative py-3 sm:max-w-xl mx-auto">
-                                <nav>
-                                    <button class="text-gray-500 w-10 h-10 focus:outline-none bg-white">
+                                <nav x-data="{ open: false }">
+                                    <button class="text-gray-500 w-10 h-10 focus:outline-none bg-white" @click="open = !open">
                                         <span class="sr-only">Open main menu</span>
                                         <div class="block w-5 absolute left-1/2 top-1/2   transform  -translate-x-1/2 -translate-y-1/2">
-                                            <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"></span>
-                                            <span aria-hidden="true" class="block absolute  h-0.5 w-5 bg-current   transform transition duration-500 ease-in-out"></span>
-                                            <span aria-hidden="true" class="block absolute  h-0.5 w-5 bg-current transform  transition duration-500 ease-in-out"></span>
+                                            <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'rotate-45': open,' -translate-y-1.5': !open }"></span>
+                                            <span aria-hidden="true" class="block absolute  h-0.5 w-5 bg-current   transform transition duration-500 ease-in-out" :class="{'opacity-0': open } "></span>
+                                            <span aria-hidden="true" class="block absolute  h-0.5 w-5 bg-current transform  transition duration-500 ease-in-out" :class="{'-rotate-45': open, ' translate-y-1.5': !open}"></span>
                                         </div>
                                     </button>
                                 </nav>
@@ -76,7 +76,8 @@ export default {
     data() {
         return {
             loggedIn: false,
-            isOpen: false
+            isOpen: false,
+            open: false
         }
     },
     components: {

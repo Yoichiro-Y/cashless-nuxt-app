@@ -4,42 +4,20 @@
       <Header />
       <main>
         <div class="container mx-auto mt-10">
-              <SubHeading 
-              title="Campaign"
-              subtitle="開催中のオトクなキャンペーン"
-              />
+              <SubHeading  title="Campaign" subtitle="開催中のキャンペーン" />
               <div class="lg:flex wrap flex-wrap content-center  container mx-auto my-auto">
                 <div v-for="campaign in campaigns" :key="campaign.index">
-                    <nuxt-link :to="`/campaign/${campaign.docId}`">
-                        <Campaign
-                        :image="campaign.image"
-                        :payment="campaign.payment"
-                        :score="campaign.score"
-                        :rate="campaign.rate"
-                        :limit="campaign.limit"
-                        :start="campaign.start"
-                        :end="campaign.end"
-                        />
+                    <nuxt-link :to="`/campaign/${campaign.id}`">
+                        <Campaign :campaign="campaign" />
                     </nuxt-link>
                 </div>
             </div>
-            <SubHeading 
-              title="Payment"
-              subtitle="支払い方法"
-              class="mt-10"
-            />
+            <SubHeading  title="Payment" subtitle="支払い方法" class="mt-10" />
             <div class="container mx-auto">
               <div class="lg:flex items-center container mx-auto my-auto">
                 <div v-for="payment in payments" :key="payment.index">
-                    <nuxt-link :to="`/payment/${payment.docId}`">
-                        <Payment
-                        :image="payment.image"
-                        :name="payment.name"
-                        :annualFee="payment.annualFee"
-                        :description="payment.description"
-                        :category="payment.category"
-                        :score="payment.score"
-                        />
+                    <nuxt-link :to="`/payment/${payment.id}`">
+                        <Payment :payment="payment" />
                     </nuxt-link>
                 </div>
             </div>
@@ -72,10 +50,6 @@ import Payment from "@/components/payments/Payment.vue";
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default {
-  data: () => ({
-    campaigns: [],
-    payments: [],
-  }),
   components: {
   	Campaign,
     Header,
@@ -84,45 +58,17 @@ export default {
     Payment,
   },
   created() {
-    const db = firebase.firestore()
-    let dbItems = db.collection('campaigns').where('end', '>', this.$dayjs().format('YYYY-MM-DD'))
-    dbItems.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const data = doc.data()
- 
-        const campaign = {
-          image: data.image ? data.image : '/no-image.png',
-          score: data.score ? data.score : 0,
-          payment: data.payment ? data.payment : '',
-          docId: doc.id,
-          rate: data.rate ? data.rate : 0,
-          limit: data.limit ? data.limit : 0,
-          start: data.start ? data.start : null,
-          end: data.end ? data.end : null,
-        }
-        this.campaigns.push(campaign)
-      })
-    })
-    dbItems = db.collection('payments')
-    if(this.$route.query.category){
-      dbItems = dbItems.where('category', '==', this.$route.query.category)
-    }
-    dbItems.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const data = doc.data()
- 
-        const payment = {
-          image: data.image ? data.image : '/no-image.png',
-          name: data.name ? data.name : '',
-          annualFee: data.annualFee ? data.annualFee : 0,
-          description: data.description ? data.description : null,
-          docId: doc.id,
-          score: data.score ? data.score : 0,
-        }
-        this.payments.push(payment)
-      })
-    })
+    this.$store.dispatch('campaigns/init')
+    this.$store.dispatch('payments/init')
   },
+  computed: {
+      campaigns() {
+        return this.$store.getters['campaigns/orderedCampaigns']
+      },
+      payments() {
+        return this.$store.getters['payments/orderedPayments']
+      }
+    },
 }
 </script>
 

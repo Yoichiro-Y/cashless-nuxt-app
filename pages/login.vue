@@ -74,7 +74,6 @@
             this.$store.dispatch('users/login', { email: this.email, password: this.password, router: this.$router })
             .then((res) => {
              showNotify('success', 'Order has been assigned')
-             console.log(res)
             })
             .catch((error) => {
               this.error = error

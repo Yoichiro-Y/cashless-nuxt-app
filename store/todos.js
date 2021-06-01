@@ -32,7 +32,7 @@ export const actions = {
 }
 
 export const getters = {
-  orderdTodos: state => {
+  orderedTodos: state => {
     return _.sortBy(state.todos, 'created')
   }
 }

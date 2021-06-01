@@ -5,7 +5,7 @@
       <li v-for="todo in todos" :key="todo.id">
         <!-- {{ todo }} -->
         <span v-if="todo.created">
-          <input 
+          <input
           type="checkbox"
           v-bind:checked="todo.done"
           @change="toggle(todo)">
@@ -53,7 +53,7 @@
     computed: {
       todos() {
         // return this.$store.state.todos.todos
-        return this.$store.getters['todos/orderdTodos']
+        return this.$store.getters['todos/orderedTodos']
       }
     },
     filters: {
