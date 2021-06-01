@@ -27,9 +27,9 @@
           </div>
           <div class="flex items-right justify-between mt-4 mb-7 text-sm text-gray-600 fill-current">
             <div class="flex items-center">
-              <button v-on:click="goodCount($props.id)" class="flex items-center ml-6">
+              <button v-on:click="goodCount($props.id), good++" v-model="good" class="flex items-center ml-6">
                 <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11 0h1v3l3 7v8a2 2 0 0 1-2 2H5c-1.1 0-2.31-.84-2.7-1.88L0 12v-2a2 2 0 0 1 2-2h7V2a2 2 0 0 1 2-2zm6 10h3v10h-3V10z"/></svg>
-                <span class="ml-2">{{ $props.good }}</span>
+                <span class="ml-2" v-model="good">{{ good }}</span>
               </button>
             </div>
             <div v-if="$props.userId == currentUserId"><button @click="showReviewEdit = !showReviewEdit" class="ml-3">編集</button><button v-on:click="remove($props.id)" class="ml-3">削除</button></div>
@@ -55,9 +55,12 @@
 
 <script>
     import Vue from 'vue'
+    import Vuex from 'vuex'
     import firebase from '@/plugins/firebase'
     import StarRating from 'vue-star-rating'
     var user = firebase.auth().currentUser
+
+    Vue.use(Vuex)
     
     export default Vue.extend({
     props: {
@@ -85,10 +88,6 @@
             type: Number,
             required: true,
         },
-        bad: {
-            type: Number,
-            required: true,
-        },
         id: {
           type: String,
           required: true,
@@ -104,14 +103,15 @@
     components: {
       StarRating,
     },
-    data: () => ({
-      review: {
+    data() {
+      return {
+        review: {
         userName: '',
         score: 0,
         description: '',
         id: '',
         title: '',
-        good: 0,
+        good: this.good,
         bad: 0,
       },
       user: {
@@ -123,7 +123,8 @@
       },
       currentUserId: '',
       showReviewEdit: false,
-    }),
+      }
+    },
     methods: {
           setupFirebase() {
               firebase.auth().onAuthStateChanged(user => {
@@ -152,16 +153,7 @@
             })
           },
           goodCount(id) {
-            const db = firebase.firestore()
-            const docId = this.$route.params.id
-            const dbItem = db.collection(this.object).doc(docId).collection('reviews')
-            console.log('aaa')
-            dbItem
-            .doc(id)
-            .update({ good: this.good + 1 })
-            .then(() => {  
-              location.reload()
-            })
+            this.$store.dispatch('campaigns/goodCount', { id: this.$route.params.id, reviewId: id })
           },
           edit(id){
             const db = firebase.firestore()
@@ -175,6 +167,7 @@
               location.reload()
             })
           }
-      }
+      },
+
     })
     </script>

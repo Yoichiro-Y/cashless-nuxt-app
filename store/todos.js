@@ -1,6 +1,5 @@
 import firebase from '~/plugins/firebase'
 import { firestoreAction } from 'vuexfire'
-import 'firebase/auth'
 
 const db = firebase.firestore()
 const todosRef = db.collection('todos')
@@ -9,18 +8,11 @@ export const state = () => ({
   todos: []
 })
 
-export default {
-  mounted() {
-      this.setupFirebase()
-  }
-}
-
-
 export const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('todos', todosRef)
   }),
-  add: firestoreAction((context, name) => {
+  count: firestoreAction((context, name) => {
     if(name.trim()) {
       todosRef.add({
         name: name,
@@ -36,7 +28,7 @@ export const actions = {
     todosRef.doc(todo.id).update({
       done: !todo.done
     })
-  }),
+  })
 }
 
 export const getters = {

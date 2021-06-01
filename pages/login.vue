@@ -14,14 +14,14 @@
                               <path d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.7592 25.1975 27.56 26.805 26.0133 27.9758C26.0142 27.975 26.015 27.975 26.0158 27.9742L31.1742 32.3392C30.8092 32.6708 36.6667 28.3333 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z" fill="#1976D2"/>
                           </svg>
                       </div>
-                      <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold" @click="login">Google でログイン</h1>
+                      <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold" @click="google">Google でログイン</h1>
                   </a>
                   <div class="mt-4 flex items-center justify-between">
                       <span class="border-b w-1/5 lg:w-1/4"></span>
                       <p href="#" class="text-xs text-center text-gray-500 uppercase">または メールアドレスでログイン</p>
                       <span class="border-b w-1/5 lg:w-1/4"></span>
                   </div>
-                  <form @submit.prevent="pressed">
+                  <form @submit.prevent="login">
                     <div class="mt-4">
                         <label class="block text-gray-700 text-sm font-bold mb-2">メールアドレス</label>
                         <input type="text" class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" v-model="email">
@@ -67,32 +67,18 @@
                 Footer
     },
     methods: {
-        login() {
-          console.log('login')
-          const provider = new firebase.auth.GoogleAuthProvider();
-          firebase
-            .auth()
-            .signInWithPopup(provider).then(function(result) {
-                const user = result.user;
-                console.log('success : ' + user)
-            })
-            .then(
-                this.$router.push('/')
-            )
-            .catch(function(error) {
-                var errorCode = error.code;
-                console.log('error : ' + errorCode)
-            })
+        google() {
+            this.$store.dispatch('users/google')
         },
-        pressed() {
-            firebase
-                .auth()
-                .signInWithEmailAndPassword(this.email, this.password)
-                .then(data => {
-                    console.log(data)
-                    this.$router.push('/')
-                })
-                .catch(error => (this.error = error))
+        login() {
+            this.$store.dispatch('users/login', { email: this.email, password: this.password, router: this.$router })
+            .then((res) => {
+             showNotify('success', 'Order has been assigned')
+             console.log(res)
+            })
+            .catch((error) => {
+              this.error = error
+            })
         }
       },
     }

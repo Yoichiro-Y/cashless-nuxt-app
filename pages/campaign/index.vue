@@ -35,7 +35,7 @@ import Footer from "@/components/Footer.vue";
 import SubHeading from "@/components/SubHeading.vue";
 import PoimonButton from "@/components/common/PoimonButton.vue";
  
-export default Vue.extend({
+export default {
   data: () => ({
     campaigns: [],
   }),
@@ -48,7 +48,6 @@ export default Vue.extend({
   },
   methods: {
       select() {
-        console.log('aaa')
         location.reload()
       }
   },
@@ -83,5 +82,5 @@ export default Vue.extend({
       })
     })
   }
-})
+}
 </script>
