@@ -107,7 +107,7 @@
         userName: '',
         score: 0,
         description: '',
-        id: '',
+        userId: '',
         title: '',
         good: 0,
         bad: 0,
@@ -149,10 +149,12 @@
       reviews.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
+
+        console.log(data)
  
         const review = {
           id: doc.id,
-          userId: doc.id,
+          userId: data.userId,
           score: data.score ? data.score : 0,
           description: data.description ? data.description : 'コメントはありません',
           userName: data.userName ? data.userName : '名称未登録',
@@ -173,7 +175,7 @@
 
         dbItem
           .collection("reviews")
-          .add({ userName: user.displayName, id: user.uid, score: this.newScore, description: this.newReview, title: this.newTitle })
+          .add({ userName: user.displayName, userId: user.uid, score: this.newScore, description: this.newReview, title: this.newTitle, good: 0 })
           .then(() => {
             dbItem.get().then((doc) =>{
               dbItem.update({

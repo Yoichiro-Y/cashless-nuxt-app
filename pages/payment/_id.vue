@@ -148,6 +148,8 @@
       reviews.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         const data = doc.data()
+
+        console.log(data)
  
         const review = {
           userId: data.userId ? data.userId : '',
