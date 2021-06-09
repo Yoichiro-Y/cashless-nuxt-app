@@ -6,7 +6,7 @@
           title="Campaign"
           subtitle="キャンペーン一覧"
         />
-        <div class="lg:flex items-center">
+        <div class="lg:flex flex-wrap items-center">
             <div v-for="campaign in campaigns" :key="campaign.index">
                 <nuxt-link :to="`/campaign/${campaign.id}`">
                     <Campaign :campaign="campaign" />

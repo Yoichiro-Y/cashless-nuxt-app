@@ -11,6 +11,7 @@
                   <div>最大還元率{{ campaign.rate }}%</div>
                   <div v-if="campaign.limit == 99999">還元上限なし</div>
                   <div v-else>還元上限{{ campaign.limit }}P</div>
+                  <div>対象店舗：{{ campaign.store }}</div>
                   <div class="flex mb-4">
                     <span class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5 w-full">
                         <StarRating
@@ -102,6 +103,7 @@
         brand: '',
         payment: '',
         reviewCount: 0,
+        store: '',
       },
       review: {
         userName: '',
@@ -143,6 +145,7 @@
         this.campaign.limit = data.limit ? data.limit : 0
         this.campaign.start = data.start ? data.start : ''
         this.campaign.end = data.end ? data.end : ''
+        this.campaign.store = data.store ? data.store : ''
         this.campaign.reviewCount = data.reviewCount ? data.reviewCount : 0
       })
 

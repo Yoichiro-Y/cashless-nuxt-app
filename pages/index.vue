@@ -4,23 +4,27 @@
       <Header />
       <main>
         <div class="container mx-auto mt-10">
-              <SubHeading  title="Campaign" subtitle="開催中のキャンペーン" />
-              <div class="lg:flex wrap flex-wrap content-center  container mx-auto my-auto">
-                <div v-for="campaign in campaigns" :key="campaign.index">
+              <SubHeading class="float-left"  title="Campaign" subtitle="注目のキャンペーン" detail=true />
+              <nuxt-link :to="`/campaign`" class="underline text-xl float-right pt-20 hidden md:block">＋もっと見る</nuxt-link>
+              <div class="md:flex flex-nowrap overflow-x-auto  container mx-auto my-auto">
+                <div v-for="campaign in campaigns.slice(0, 6)" :key="campaign.index">
                     <nuxt-link :to="`/campaign/${campaign.id}`">
                         <Campaign :campaign="campaign" />
                     </nuxt-link>
                 </div>
+                <nuxt-link :to="`/campaign`" class="my-12 mx-16 text-xl pt-20 underline md:hidden">＋もっと見る</nuxt-link>
             </div>
-            <SubHeading  title="Payment" subtitle="支払い方法" class="mt-10" />
+            <SubHeading class="float-left mt-10" title="Payment" subtitle="支払い方法" />
+            <nuxt-link :to="`/payment`" class="underline text-xl float-right pt-20 hidden md:block mt-10">＋もっと見る</nuxt-link>
             <div class="container mx-auto">
-              <div class="lg:flex items-center container mx-auto my-auto">
-                <div v-for="payment in payments" :key="payment.index">
+              <div class="md:flex flex-nowrap overflow-x-auto  container mx-auto my-auto">
+                <div v-for="payment in payments.slice(0, 6)" :key="payment.index">
                     <nuxt-link :to="`/payment/${payment.id}`">
                         <Payment :payment="payment" />
                     </nuxt-link>
                 </div>
-            </div>
+              </div>
+              <nuxt-link :to="`/payment`" class="my-12 mx-16 text-xl pt-20 underline md:hidden">＋もっと見る</nuxt-link>
             </div>
         </div>
       </main>

@@ -26,11 +26,6 @@
             <div class="hidden lg:block">
                 <Search />
             </div>
-            <div class="flex justify-between items-center">
-                <a class="hidden lg:block" href="/payment"><PoimonButton text="決済" /></a>
-                <a class="hidden lg:block" href="/campaign?search=toyota"><PoimonButton text="toyota" /></a>
-                <a class="hidden lg:block"href="/campaign?search=aupay"><PoimonButton text="aupay" /></a>
-            </div>
             <div class="flex flex-col md:flex-row hidden md:block -mx-2">
                 <div v-if="loggedIn">
                     <a href="/" class="text-gray-800 rounded hover:bg-gray-700 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>

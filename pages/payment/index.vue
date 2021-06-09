@@ -3,7 +3,7 @@
     <Header />
         <div class="relative items-center container mx-auto my-auto">
           <SubHeading  title="Payment" subtitle="決済方法一覧" />
-          <div class="lg:flex items-center container mx-auto my-auto">       
+          <div class="lg:flex flex-wrap items-center container mx-auto my-auto">       
             <div v-for="payment in payments" :key="payment.index">
                 <nuxt-link :to="`/payment/${payment.id}`">
                     <Payment :payment="payment" />
