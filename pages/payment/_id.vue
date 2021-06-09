@@ -173,7 +173,7 @@
 
         dbItem
           .collection("reviews")
-          .add({ userName: user.displayName, userId: user.uid, score: this.newScore, description: this.newReview, title: this.newTitle })
+          .add({ userName: user.displayName, userId: user.uid, score: this.newScore, description: this.newReview, title: this.newTitle, good: 0 })
           .then(() => {
             dbItem.get().then((doc) =>{
               dbItem.update({

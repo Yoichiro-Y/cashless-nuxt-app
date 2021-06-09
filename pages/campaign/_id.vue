@@ -23,8 +23,8 @@
                     </span>
                   </div>
                   <div class="flex">
-                    <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                      <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <button v-if="loggedIn" class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                      <svg @click="like();" fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
                         <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                       </svg>
                     </button>
@@ -123,6 +123,7 @@
       newScore: 0,
       newReview: '',
       newTitle: '',
+      currentColor: '',
       showReviewInput: false,
       StarRatingConfig: {
         starSize: 30,
@@ -135,6 +136,8 @@
       const dbItem = db.collection('campaigns').doc(docId)
 
       const reviews = dbItem.collection("reviews").orderBy("good", "desc");
+
+      this.currentColor = 'red'
 
       dbItem.get().then((doc) => {
         const data = doc.data()
@@ -187,6 +190,11 @@
             location.reload()
           })
         });
+      },
+      like(id) {
+        var user = firebase.auth().currentUser;
+        this.$store.dispatch('campaigns/like', { id: user.uid, campaignId: this.$route.params.id})
+        this.currentColor = 'red'
       },
       setupFirebase() {
         firebase.auth().onAuthStateChanged(user => {

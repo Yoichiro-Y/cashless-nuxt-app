@@ -29,6 +29,7 @@
             <div class="flex flex-col md:flex-row hidden md:block -mx-2">
                 <div v-if="loggedIn">
                     <a href="/" class="text-gray-800 rounded hover:bg-gray-700 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ホーム</a>
+                    <nuxt-link :to="`/user/${user.id}`" class="text-gray-800 rounded hover:bg-gray-700 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">マイページ</nuxt-link>
                     <a @click="logout" class="text-gray-800 rounded hover:bg-gray-900 hover:text-gray-100 hover:font-medium py-2 px-2 md:mx-2">ログアウト</a>
                 </div>
                 <div v-else>
@@ -60,21 +61,25 @@
 
 <script>
 import Search from "@/components/Search.vue";
-import * as firebase from 'firebase/app';
+import firebase from '@/plugins/firebase'
 import 'firebase/auth';
 import PoimonButton from "@/components/common/PoimonButton.vue";
 
 export default {
+    created() {
+        this.user.id = firebase.auth().currentUser ? firebase.auth().currentUser.uid : ''
+    },
     mounted() {
         this.setupFirebase()
     },
-    data() {
-        return {
-            loggedIn: false,
-            isOpen: false,
-            open: false
+    data: () => ({
+        loggedIn: false,
+        isOpen: false,
+        open: false,
+        user: {
+            id: ''
         }
-    },
+    }),
     components: {
         Search,
         PoimonButton,

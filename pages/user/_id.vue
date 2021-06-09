@@ -2,9 +2,9 @@
     <div>
     <Header />
     <div class="relative items-center container mx-auto my-auto">
-        <SubHeading
+        <SubHeading 
           title="Campaign"
-          subtitle="キャンペーン一覧"
+          subtitle="お気に入りキャンペーン一覧"
         />
         <div class="lg:flex flex-wrap items-center">
             <div v-for="campaign in campaigns" :key="campaign.index">
@@ -41,7 +41,7 @@ export default {
         }
     },
   created() {
-    this.$store.dispatch('campaigns/search')
+    this.$store.dispatch('campaigns/user')
   },
   computed: {
       campaigns() {
