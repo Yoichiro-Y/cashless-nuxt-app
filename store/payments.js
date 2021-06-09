@@ -25,6 +25,6 @@ export const actions = {
 
 export const getters = {
   orderedPayments: state => {
-    return _.sortBy(state.payments, 'created')
+    return _.sortBy(state.payments, 'score').reverse()
   }
 }

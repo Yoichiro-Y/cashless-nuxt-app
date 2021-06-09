@@ -29,6 +29,6 @@ export const actions = {
 
 export const getters = {
   orderedCampaigns: state => {
-    return _.sortBy(state.campaigns, 'created')
+    return _.sortBy(state.campaigns, 'score').reverse()
   }
 }
